@@ -1,20 +1,25 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, ScrollView } from 'react-native';
 import { Content } from 'native-base';
-import LibCard from '../components/LibraryCard';
+import Moment from 'moment-timezone';
 
 export default function(props) {
+  const currentTime = Moment()
+    .tz('America/Chicago')
+    .format('hh:mma z');
   return (
-    <Content
-      padder
-      contentContainerStyle={{
-        flex: 1,
-        justifyContent: 'space-between'
-      }}
-    >
-      <Text>An app to view the nearest open library</Text>
-      <LibCard />
-      <Text>Multiple cards will be displayed here</Text>
-    </Content>
+    <ScrollView>
+      <Content
+        padder
+        contentContainerStyle={{
+          flex: 1,
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}
+      >
+        <Text>It is {currentTime} in Austin</Text>
+        <Text>Display a list of open libraries.</Text>
+      </Content>
+    </ScrollView>
   );
 }

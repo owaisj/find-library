@@ -1,10 +1,11 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
-import { Header, Left, Right, Title, Subtitle, Body } from 'native-base';
+import { StatusBar, Dimensions } from 'react-native';
+import { Header, Left, Right, Title, Subtitle, Body, Icon } from 'native-base';
 
 export default function() {
   return (
     <Header
+      noShadow
       style={{
         backgroundColor: '#4630eb',
         paddingTop: StatusBar.currentHeight,
@@ -12,10 +13,12 @@ export default function() {
       }}
       androidStatusBarColor="#4630eb"
     >
-      <Left />
+      <Left style={{ alignItems: 'center' }}>
+        <Icon style={{ color: '#ffffff' }} name="book" />
+      </Left>
       <Body>
-        <Title>Library Hours</Title>
-        <Subtitle>Austin Public Library</Subtitle>
+        <Title>Is It Open?</Title>
+        <Subtitle>Austin Library Hours</Subtitle>
       </Body>
       <Right />
     </Header>

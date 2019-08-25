@@ -24,6 +24,9 @@ const LocationCard = ({
           style={{ height: 200, width: null, flex: 1 }}
         />
       </CardItem>
+      <CardItem bordered>
+        <Text>Is it open?</Text>
+      </CardItem>
       <CardItem
         bordered
         style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }}

@@ -10,11 +10,13 @@ import {
 import Header from './components/Header';
 import Home from './screens/Home';
 import List from './screens/List';
+import Mapper from './screens/Mapper';
 
 const MainNavigator = createMaterialTopTabNavigator(
   {
     Home: { screen: Home },
-    List: { screen: List }
+    List: { screen: List },
+    Map: { screen: Mapper }
   },
   {
     tabBarOptions: {
