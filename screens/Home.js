@@ -1,10 +1,20 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Text } from 'react-native';
+import { Content } from 'native-base';
+import LibCard from '../components/LibraryCard';
 
 export default function(props) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Welcome to the Austin Public Library Hours Checker</Text>
-    </View>
+    <Content
+      padder
+      contentContainerStyle={{
+        flex: 1,
+        justifyContent: 'space-between'
+      }}
+    >
+      <Text>An app to view the nearest open library</Text>
+      <LibCard />
+      <Text>Multiple cards will be displayed here</Text>
+    </Content>
   );
 }
