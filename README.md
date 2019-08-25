@@ -4,10 +4,8 @@ Find out which library near you is open at any time!
 
 ## Technologies
 
-Made with React Native
+Made with React Native and Expo
 
-## Ideas
+## Future Features
 
-- Maps
-- Save to Favorites
-- View Open Favorites
+Save and View Favorites

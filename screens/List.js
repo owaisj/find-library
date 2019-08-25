@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, View, Text, ScrollView } from 'react-native';
 import { Content } from 'native-base';
 import LibCard from '../components/LibraryCard';
+import libData from '../data';
 
 export default function(props) {
   return (
@@ -16,7 +17,9 @@ export default function(props) {
         <Text style={{ textAlign: 'center', margin: 15 }}>
           Display location information for the libraries.
         </Text>
-        <LibCard />
+        {libData.map((loc, idx) => (
+          <LibCard key={idx} {...loc} />
+        ))}
       </Content>
     </ScrollView>
   );

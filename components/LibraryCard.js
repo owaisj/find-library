@@ -1,17 +1,23 @@
 import React from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
-import { Card, CardItem, Body, Text, Left, Right } from 'native-base';
+import { Card, CardItem, Body, Text, Left, Right, Icon } from 'native-base';
 
 const LocationCard = ({
   name = 'Central Library',
   address = ['710 W Cesar Chavez St', 'Austin, TX 78701'],
   pNumber = '512-974-7400',
-  imageURL = 'https://library.austintexas.gov/sites/default/files/ncl_location_page_large.jpg',
-  hours = [
-    'Sunday: 12PM - 6PM',
-    'Monday - Thursday: 10AM - 9PM',
-    'Friday - Saturday: 10AM - 6PM'
-  ]
+  image = 'https://library.austintexas.gov/sites/default/files/ncl_location_page_large.jpg',
+  hours = {
+    Sun: ['12pm', '6pm'],
+    Mon: ['10am', '9pm'],
+    Tue: ['10am', '9pm'],
+    Wed: ['10am', '9pm'],
+    Thu: ['10am', '9pm'],
+    Fri: ['10am', '6pm'],
+    Sat: ['10am', '6pm']
+  },
+  latitude = 30.26569,
+  longitude = -97.75178
 }) => {
   return (
     <Card>
@@ -20,7 +26,7 @@ const LocationCard = ({
       </CardItem>
       <CardItem body bordered>
         <Image
-          source={{ uri: imageURL }}
+          source={{ uri: image }}
           style={{ height: 200, width: null, flex: 1 }}
         />
       </CardItem>
@@ -29,15 +35,18 @@ const LocationCard = ({
       </CardItem>
       <CardItem
         bordered
-        style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }}
+        style={{ justifyContent: 'space-between', alignItems: 'flex-start' }}
       >
         <View>
           <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Hours</Text>
-          {hours.map((line, index) => (
-            <Text key={index} style={{ fontSize: 10 }}>
-              {line}
-            </Text>
-          ))}
+
+          {Object.keys(hours).map((day, idx) => {
+            return (
+              <Text key={idx} style={{ fontSize: 10 }}>
+                {day}: {hours[day].join(' - ')}
+              </Text>
+            );
+          })}
         </View>
         <View>
           <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Address</Text>
@@ -51,16 +60,27 @@ const LocationCard = ({
         </View>
       </CardItem>
       <CardItem footer bordered>
-        <Left>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between'
+          }}
+        >
           <TouchableOpacity onPress={() => console.log('You rang?')}>
-            <Text>{pNumber}</Text>
+            <Text>
+              <Icon style={{ fontSize: 15 }} name="call" />
+              {pNumber}
+            </Text>
           </TouchableOpacity>
-        </Left>
-        <Right>
+
           <TouchableOpacity onPress={() => console.log('You map?')}>
-            <Text>View on Map</Text>
+            <Text>
+              <Icon style={{ fontSize: 15 }} name="map" />
+              {latitude.toFixed(2)}, {longitude.toFixed(2)}
+            </Text>
           </TouchableOpacity>
-        </Right>
+        </View>
       </CardItem>
     </Card>
   );
