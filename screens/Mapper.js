@@ -3,7 +3,8 @@ import { ScrollView, Dimensions, View, Text } from 'react-native';
 import { Content, Button } from 'native-base';
 import MapView, { Marker } from 'react-native-maps';
 import MarkButton from '../components/MarkButton';
-import libData from '../data';
+import data from '../data';
+import _ from 'lodash';
 
 // TODO: Pagination - Chunk the data array
 export default class Mapper extends Component {
@@ -13,18 +14,20 @@ export default class Mapper extends Component {
       name: 'Central Library',
       latitude: 30.269498922,
       longitude: -97.74083037,
-      description: 'The central branch of the Austin Public Library'
+      description: 'The central branch of the Austin Public Library',
+      page: 0
     };
   }
 
   render() {
     const { width } = Dimensions.get('screen');
-    const { latitude, longitude, name, description } = this.state;
+    const { latitude, longitude, name, description, page } = this.state;
+    const libData = _.chunk(data, 2);
     return (
       <ScrollView>
         <Content>
           <MapView
-            style={{ width, height: 300 }}
+            style={{ width, height: 175 }}
             region={{
               latitude,
               longitude,
@@ -44,9 +47,10 @@ export default class Mapper extends Component {
               justifyContent: 'space-evenly'
             }}
           >
-            <Text style={{ margin: 15 }}>
+            <Text style={{ margin: 5 }}>
               Click a button to change the map view.
             </Text>
+            <Text style={{ margin: 10 }}>Now viewing {this.state.name}</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -54,7 +58,7 @@ export default class Mapper extends Component {
                 justifyContent: 'center'
               }}
             >
-              {libData.map((location, idx) => (
+              {libData[page].map((location, idx) => (
                 <MarkButton
                   key={idx}
                   {...location}
@@ -68,6 +72,31 @@ export default class Mapper extends Component {
                   }
                 />
               ))}
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                justifyContent: 'center'
+              }}
+            >
+              <Button
+                style={{ margin: 5 }}
+                success
+                onPress={() => {
+                  let newPage;
+                  if (page === libData.length - 1) {
+                    newPage = 0;
+                  } else {
+                    newPage = page + 1;
+                  }
+                  this.setState({ page: newPage });
+                }}
+              >
+                <Text style={{ color: '#ffffff', marginHorizontal: 15 }}>
+                  {(page + 1).toString()} Next
+                </Text>
+              </Button>
             </View>
           </View>
         </Content>

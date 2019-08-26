@@ -15,7 +15,7 @@ export default function(props) {
           flex: 1,
           justifyContent: 'space-between',
           alignItems: 'center',
-          minHeight: 400
+          minHeight: 300
         }}
       >
         <Text>It is {currentTime} in Austin</Text>
@@ -25,7 +25,7 @@ export default function(props) {
               'https://library.austintexas.gov/sites/default/files/misc/blue_apl_logo.png'
           }}
           style={{
-            width: 300,
+            width: 200,
             height: 150,
             resizeMode: 'center'
           }}
