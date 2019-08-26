@@ -7,11 +7,11 @@ export default function() {
     <Header
       noShadow
       style={{
-        backgroundColor: '#4630eb',
+        backgroundColor: '#0053A1',
         paddingTop: StatusBar.currentHeight,
         height: 50 + StatusBar.currentHeight
       }}
-      androidStatusBarColor="#4630eb"
+      androidStatusBarColor="#0053A1"
     >
       <Left style={{ alignItems: 'center' }}>
         <Icon style={{ color: '#ffffff' }} name="book" />

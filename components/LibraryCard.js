@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 import { Card, CardItem, Body, Text, Left, Right, Icon } from 'native-base';
+import Moment from 'moment-timezone';
 
 const LocationCard = ({
   name = 'Central Library',
@@ -19,6 +20,16 @@ const LocationCard = ({
   latitude = 30.26569,
   longitude = -97.75178
 }) => {
+  const now = Moment().tz('America/Chicago');
+  const today = now.format('ddd');
+  const openTime = Moment(hours[today][0], 'ha');
+  const closeTime = Moment(hours[today][1], 'ha');
+  let check;
+  if (hours[today][0] === 'Closed') {
+    check = false;
+  } else {
+    check = now.isBetween(openTime, closeTime);
+  }
   return (
     <Card>
       <CardItem header bordered button>
@@ -30,8 +41,15 @@ const LocationCard = ({
           style={{ height: 200, width: null, flex: 1 }}
         />
       </CardItem>
-      <CardItem bordered>
-        <Text>Is it open?</Text>
+      <CardItem
+        bordered
+        style={{ flexDirection: 'row', justifyContent: 'center' }}
+      >
+        {check ? (
+          <Text style={{ color: 'green' }}>Open!</Text>
+        ) : (
+          <Text style={{ color: 'red' }}>Closed</Text>
+        )}
       </CardItem>
       <CardItem
         bordered
@@ -50,7 +68,7 @@ const LocationCard = ({
         </View>
         <View>
           <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Address</Text>
-          <View style={{ flex: 1, justifyContent: 'space-evenly' }}>
+          <View style={{ flex: 1, justifyContent: 'center' }}>
             {address.map((line, index) => (
               <Text key={index} style={{ fontSize: 10 }}>
                 {line}
@@ -70,6 +88,7 @@ const LocationCard = ({
           <TouchableOpacity onPress={() => console.log('You rang?')}>
             <Text>
               <Icon style={{ fontSize: 15 }} name="call" />
+              {'  '}
               {pNumber}
             </Text>
           </TouchableOpacity>
@@ -77,6 +96,7 @@ const LocationCard = ({
           <TouchableOpacity onPress={() => console.log('You map?')}>
             <Text>
               <Icon style={{ fontSize: 15 }} name="map" />
+              {'  '}
               {latitude.toFixed(2)}, {longitude.toFixed(2)}
             </Text>
           </TouchableOpacity>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, ScrollView } from 'react-native';
-import { Content } from 'native-base';
+import { Text, ScrollView, Image, View } from 'react-native';
+import { Content, Card, CardItem } from 'native-base';
 import Moment from 'moment-timezone';
 
 export default function(props) {
@@ -14,11 +14,26 @@ export default function(props) {
         contentContainerStyle={{
           flex: 1,
           justifyContent: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
+          minHeight: 400
         }}
       >
         <Text>It is {currentTime} in Austin</Text>
-        <Text>Display a list of open libraries.</Text>
+        <Image
+          source={{
+            uri:
+              'https://library.austintexas.gov/sites/default/files/misc/blue_apl_logo.png'
+          }}
+          style={{
+            width: 300,
+            height: 150,
+            resizeMode: 'center'
+          }}
+        />
+        <Text>
+          Have you ever wanted to know which libraries are currently open AND
+          nearby? This app can give you that information!
+        </Text>
       </Content>
     </ScrollView>
   );

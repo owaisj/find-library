@@ -15,13 +15,13 @@ import Mapper from './screens/Mapper';
 const MainNavigator = createMaterialTopTabNavigator(
   {
     Home: { screen: Home },
-    List: { screen: List },
+    Locations: { screen: List },
     Map: { screen: Mapper }
   },
   {
     tabBarOptions: {
       style: {
-        backgroundColor: '#4630eb'
+        backgroundColor: '#0053A1'
       }
     }
   }
@@ -56,8 +56,8 @@ export default class App extends Component {
         <Container>
           <Header />
           <Root />
-          <Footer style={{ alignItems: 'center', backgroundColor: '#4630eb' }}>
-            <Text style={{ color: 'white' }}>Made by Owais Jamil 2019</Text>
+          <Footer style={{ alignItems: 'center', backgroundColor: '#0053A1' }}>
+            <Text style={{ color: 'white' }}>Made by Owais Jamil in 2019</Text>
           </Footer>
         </Container>
       </Fragment>
