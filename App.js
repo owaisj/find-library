@@ -1,25 +1,67 @@
-// import React from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
+import React, { Component, Fragment } from 'react';
+import { Text } from 'react-native';
+import { Container, Content, Footer } from 'native-base';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
 import {
   createMaterialTopTabNavigator,
   createAppContainer
 } from 'react-navigation';
+import Header from './components/Header';
 import Home from './screens/Home';
 import List from './screens/List';
+import Mapper from './screens/Mapper';
+import Search from './screens/Search';
+const MainNavigator = createMaterialTopTabNavigator(
+  {
+    Home: { screen: Home },
+    Locations: { screen: List },
+    Map: { screen: Mapper },
+    Search: { screen: Search }
+  },
+  {
+    tabBarOptions: {
+      style: {
+        backgroundColor: '#0053A1'
+      }
+    }
+  }
+);
 
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Library Hours</Text>
-//     </View>
-//   );
-// }
+const Root = createAppContainer(MainNavigator);
 
-const MainNavigator = createMaterialTopTabNavigator({
-  Home: { screen: Home },
-  List: { screen: List }
-});
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { loading: true };
+  }
 
-const App = createAppContainer(MainNavigator);
+  async componentDidMount() {
+    await Font.loadAsync({
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
+    });
 
-export default App;
+    this.setState({
+      loading: false
+    });
+  }
+
+  render() {
+    if (this.state.loading) {
+      return <AppLoading />;
+    }
+
+    return (
+      <Fragment>
+        <Container>
+          <Header />
+          <Root />
+          <Footer style={{ alignItems: 'center', backgroundColor: '#0053A1' }}>
+            <Text style={{ color: 'white' }}>Made by Owais Jamil in 2019</Text>
+          </Footer>
+        </Container>
+      </Fragment>
+    );
+  }
+}
