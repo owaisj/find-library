@@ -8,4 +8,5 @@ Made with React Native and Expo
 
 ## Future Features
 
-Save and View Favorites
+Save and View Favorites  
+Store user location in application-wide state (Redux or Context)

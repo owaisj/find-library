@@ -20,6 +20,7 @@ const LocationCard = ({
   latitude = 30.26569,
   longitude = -97.75178
 }) => {
+  // TODO: Create utility function
   const now = Moment().tz('America/Chicago');
   const today = now.format('ddd');
   const openTime = Moment(hours[today][0], 'ha');

@@ -1,4 +1,5 @@
 // TODO: Add URL to each library
+// TODO: Add region (North, South, Central)
 export default [
   {
     name: 'Central Library',

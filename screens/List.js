@@ -1,13 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { Button, Content } from 'native-base';
+import { Button, Content, Form, Item, Label, Input } from 'native-base';
 import LibCard from '../components/LibraryCard';
 import data from '../data';
 import _ from 'lodash';
 
+// TODO: Filters - ALL, OPEN, CLOSED
 export default function(props) {
-  const [page, setPage] = useState(0);
-  const libData = _.chunk(data, 2);
+  // Component Level State
+  const [show, setShow] = useState(true);
+  const [searchVal, setSearchVal] = useState('');
+  const [libData, setLibData] = useState(data);
+
+  useEffect(() => {
+    let matches = data.filter(location => {
+      // Starts with search text
+      // Global and Case Insensitive
+      const regex = new RegExp(`${searchVal}`, 'gi');
+      return location.name.match(regex);
+    });
+    if (searchVal === '') {
+      setShow(true);
+      matches = data;
+    } else {
+      setShow(false);
+    }
+    setLibData(matches);
+  }, [searchVal]);
+
+  // const libData = _.chunk(data, 2);
   return (
     <ScrollView>
       <Content
@@ -17,37 +38,25 @@ export default function(props) {
           justifyContent: 'space-between'
         }}
       >
-        <Text style={{ textAlign: 'center', margin: 15 }}>
-          Library Location Information
-        </Text>
-        {libData[page].map((loc, idx) => (
-          <LibCard key={idx} {...loc} />
-        ))}
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          <Button
-            style={{ margin: 5 }}
-            success
-            onPress={() => {
-              let newPage;
-              if (page === libData.length - 1) {
-                newPage = 0;
-              } else {
-                newPage = page + 1;
-              }
-              setPage(newPage);
-            }}
-          >
-            <Text style={{ color: '#ffffff', marginHorizontal: 15 }}>
-              Next Page
-            </Text>
-          </Button>
+        <Form>
+          <Item stackedLabel>
+            <Label style={{ fontWeight: 'bold' }}>"Checkout" a Library</Label>
+            <Input
+              onChangeText={text => setSearchVal(text)}
+              placeholderTextColor="grey"
+              placeholder="Try Old Quarry"
+            />
+          </Item>
+        </Form>
+
+        <View>
+          {libData.map((loc, idx) => (
+            <LibCard key={idx} {...loc} />
+          ))}
         </View>
+        <Text style={{ textAlign: 'center', margin: 15 }}>
+          Currently Viewing: {libData.map(location => location.name).join(', ')}
+        </Text>
       </Content>
     </ScrollView>
   );

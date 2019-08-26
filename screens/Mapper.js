@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { ScrollView, Dimensions, View, Text } from 'react-native';
+import { ScrollView, Dimensions, View, Text, Icon } from 'react-native';
 import { Content, Button } from 'native-base';
 import MapView, { Marker } from 'react-native-maps';
 import MarkButton from '../components/MarkButton';
 import data from '../data';
 import _ from 'lodash';
 
-// TODO: Pagination - Chunk the data array
+// TODO: FILTERS - ALL, NORTH, SOUTH, CENTRAL
 export default class Mapper extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +34,7 @@ export default class Mapper extends Component {
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421
             }}
+            minZoomLevel={15}
           >
             <Marker
               title={name}
@@ -85,16 +86,36 @@ export default class Mapper extends Component {
                 success
                 onPress={() => {
                   let newPage;
+                  if (page === 0) {
+                    newPage = libData.length - 1;
+                  } else {
+                    newPage = page - 1;
+                  }
+                  this.setState({ ...libData[newPage][0], page: newPage });
+                }}
+              >
+                <Text style={{ color: '#ffffff', marginHorizontal: 15 }}>
+                  {'<<<'}
+                </Text>
+              </Button>
+              <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>
+                {(page + 1).toString()}
+              </Text>
+              <Button
+                style={{ margin: 5 }}
+                success
+                onPress={() => {
+                  let newPage;
                   if (page === libData.length - 1) {
                     newPage = 0;
                   } else {
                     newPage = page + 1;
                   }
-                  this.setState({ page: newPage });
+                  this.setState({ ...libData[newPage][0], page: newPage });
                 }}
               >
                 <Text style={{ color: '#ffffff', marginHorizontal: 15 }}>
-                  {(page + 1).toString()} Next
+                  {'>>>'}
                 </Text>
               </Button>
             </View>
