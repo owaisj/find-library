@@ -1,10 +1,14 @@
 {
   "expo": {
-    "name": "Austin Public Library Hours",
-    "slug": "AtxLibHours",
+    "name": "Is It Open?",
+    "slug": "isitopen",
     "privacy": "public",
     "sdkVersion": "34.0.0",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,9 +20,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Find out which library near you is open at any time! This app will tell you the nearest open library in the Austin Public Library System.",
+    "githubUrl": "https://github.com/owaisj/find-library"
   }
 }
