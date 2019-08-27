@@ -1,34 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Button, Content, Form, Item, Label, Input } from 'native-base';
 import LibCard from '../components/LibraryCard';
 import data from '../data';
-import _ from 'lodash';
+import { checkClosed, checkOpen } from '../utils';
 
-// TODO: Filters - ALL, OPEN, CLOSED
 export default function(props) {
-  // Component Level State
-  const [show, setShow] = useState(true);
   const [searchVal, setSearchVal] = useState('');
+  const [filtered, setFiltered] = useState(data);
   const [libData, setLibData] = useState(data);
 
   useEffect(() => {
-    let matches = data.filter(location => {
+    setLibData(filtered);
+  }, [filtered]);
+
+  useEffect(() => {
+    let matches = filtered.filter(location => {
       // Starts with search text
       // Global and Case Insensitive
       const regex = new RegExp(`${searchVal}`, 'gi');
       return location.name.match(regex);
     });
     if (searchVal === '') {
-      setShow(true);
       matches = data;
-    } else {
-      setShow(false);
     }
     setLibData(matches);
   }, [searchVal]);
 
-  // const libData = _.chunk(data, 2);
   return (
     <ScrollView>
       <Content
@@ -38,6 +36,38 @@ export default function(props) {
           justifyContent: 'space-between'
         }}
       >
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginHorizontal: 10
+          }}
+        >
+          <Button info onPress={() => setFiltered(data)}>
+            <Text style={{ color: '#ffffff', marginHorizontal: 15 }}>
+              View All
+            </Text>
+          </Button>
+          <Button
+            success
+            onPress={() =>
+              setFiltered(data.filter(location => checkOpen(location)))
+            }
+          >
+            <Text style={{ color: '#ffffff', marginHorizontal: 15 }}>Open</Text>
+          </Button>
+
+          <Button
+            danger
+            onPress={() =>
+              setFiltered(data.filter(location => checkClosed(location)))
+            }
+          >
+            <Text style={{ color: '#ffffff', marginHorizontal: 15 }}>
+              Closed
+            </Text>
+          </Button>
+        </View>
         <Form>
           <Item stackedLabel>
             <Label style={{ fontWeight: 'bold' }}>"Checkout" a Library</Label>

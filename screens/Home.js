@@ -4,8 +4,6 @@ import { Content, Card, CardItem, Body } from 'native-base';
 import data from '../data';
 import { checkClosed, checkOpen, sortLibs } from '../utils';
 
-// TODO: Create arrays of open and closed libraries
-// TODO: Distance array
 export default function(props) {
   const [userLoc, setUserLoc] = useState({
     latitude: 30.2648,
@@ -17,7 +15,6 @@ export default function(props) {
         const { latitude, longitude } = position.coords;
         setUserLoc({ latitude, longitude });
       },
-
       error => console.log(error)
     );
   }, []);

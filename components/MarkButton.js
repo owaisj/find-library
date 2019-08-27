@@ -17,10 +17,3 @@ export default function({ name, handleChange }) {
     </Button>
   );
 }
-
-// this.setState({
-//   title: 'Old Quarry Branch',
-//   description: 'Off of Far West',
-//   latitude: 30.35298,
-//   longitude: -97.75513
-// });

@@ -57,6 +57,78 @@ export default [
     pNumber: '512-974-7480'
   },
   {
+    name: 'Carver',
+    description: 'Located south of UT Austin',
+    latitude: 30.269825,
+    longitude: -97.724103,
+    address: ['1161 Angelina St.', 'Austin, TX, 78702'],
+    image: 'https://library.austintexas.gov/sites/default/files/acb_1a.jpg',
+    hours: {
+      Sun: ['Closed'],
+      Mon: ['10am', '9pm'],
+      Tue: ['10am', '9pm'],
+      Wed: ['10am', '9pm'],
+      Thu: ['10am', '9pm'],
+      Fri: ['10am', '6pm'],
+      Sat: ['10am', '5pm']
+    },
+    pNumber: '512-974-1010'
+  },
+  {
+    name: 'Cepeda',
+    description: 'In East Austin near the river',
+    latitude: 30.260692,
+    longitude: -97.708953,
+    address: ['651 N. Pleasant Valley Rd.', 'Austin, TX, 78702'],
+    image: 'https://library.austintexas.gov/sites/default/files/acp.jpg',
+    hours: {
+      Sun: ['Closed'],
+      Mon: ['10am', '9pm'],
+      Tue: ['10am', '9pm'],
+      Wed: ['10am', '9pm'],
+      Thu: ['10am', '9pm'],
+      Fri: ['10am', '6pm'],
+      Sat: ['10am', '5pm']
+    },
+    pNumber: '512-974-7372'
+  },
+  {
+    name: 'Hampton at Oak Hill',
+    description: 'Closed for complete renovation.',
+    latitude: 30.21799,
+    longitude: -97.85482,
+    address: ['5125 Convict Hill Rd', 'Austin, TX 78749'],
+    image: 'https://library.austintexas.gov/sites/default/files/aok_0a.jpg',
+    hours: {
+      Sun: ['Closed'],
+      Mon: ['Closed'],
+      Tue: ['Closed'],
+      Wed: ['Closed'],
+      Thu: ['Closed'],
+      Fri: ['Closed'],
+      Sat: ['Closed']
+    },
+    pNumber: '512-974-9900'
+  },
+  {
+    name: 'Howson',
+    description: 'In Terrytown',
+    latitude: 30.298607,
+    longitude: -97.76768,
+    address: ['2500 Exposition Blvd.', 'Austin, TX, 78703'],
+    image: 'https://library.austintexas.gov/sites/default/files/aho_0a.jpg',
+    hours: {
+      Sun: ['Closed'],
+      Mon: ['10am', '9pm'],
+      Tue: ['10am', '9pm'],
+      Wed: ['10am', '9pm'],
+      Thu: ['10am', '9pm'],
+      Fri: ['10am', '6pm'],
+      Sat: ['10am', '5pm']
+    },
+    pNumber: '512-974-8800'
+  },
+  {
     name: 'Willie Make Kirk',
     description: '',
     latitude: 30.27273,
