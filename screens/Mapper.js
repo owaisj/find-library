@@ -4,11 +4,8 @@ import { Content, Button } from 'native-base';
 import MapView, { Marker } from 'react-native-maps';
 import MarkButton from '../components/MarkButton';
 import data from '../data';
-import { checkOpen } from '../utils';
-import _ from 'lodash';
+import { checkOpen, checkClosed } from '../utils';
 
-// TODO: FILTERS - ALL, OPEN, CLOSED
-// TODO: Specific color for markers
 export default class Mapper extends Component {
   constructor(props) {
     super(props);
@@ -17,15 +14,34 @@ export default class Mapper extends Component {
       latitude: 30.269498922,
       longitude: -97.74083037,
       description: 'The central branch of the Austin Public Library',
-      open: checkOpen(data[0]),
-      page: 0
+      libData: data,
+      page: 0,
+      filter: 'ALL'
     };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { filter } = this.state;
+    if (prevState.filter !== filter) {
+      switch (filter) {
+        case 'OPEN':
+          const openLibs = data.filter(loc => checkOpen(loc));
+          return this.setState({ libData: openLibs, ...openLibs[0] });
+        case 'CLOSED':
+          const closedLibs = data.filter(loc => checkClosed(loc));
+          return this.setState({
+            libData: closedLibs,
+            ...closedLibs[0]
+          });
+        default:
+          return this.setState({ libData: data, ...data[0] });
+      }
+    }
   }
 
   render() {
     const { width } = Dimensions.get('screen');
-    const { latitude, longitude, name, description, page, open } = this.state;
-    const libData = _.chunk(data, 3);
+    const { latitude, longitude, name, description, libData } = this.state;
     return (
       <ScrollView>
         <Content>
@@ -52,9 +68,9 @@ export default class Mapper extends Component {
             }}
           >
             <Text style={{ margin: 5 }}>
-              Click a button to change the map view.
+              Click a button to change the marker.
             </Text>
-            <Text style={{ margin: 10 }}>Now viewing {this.state.name}</Text>
+            <Text style={{ margin: 10 }}>On map: {this.state.name}</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -62,7 +78,52 @@ export default class Mapper extends Component {
                 justifyContent: 'center'
               }}
             >
-              {libData[page].map((location, idx) => (
+              <Button
+                disabled={this.state.filter === 'OPEN'}
+                style={{ margin: 5 }}
+                light
+                onPress={() => {
+                  this.setState({ filter: 'OPEN' });
+                }}
+              >
+                <Text style={{ color: 'green', marginHorizontal: 15 }}>
+                  List Open
+                </Text>
+              </Button>
+              <Button
+                disabled={this.state.filter === 'ALL'}
+                style={{ margin: 5 }}
+                light
+                onPress={() => {
+                  this.setState({ filter: 'ALL' });
+                }}
+              >
+                <Text style={{ color: 'black', marginHorizontal: 15 }}>
+                  List All
+                </Text>
+              </Button>
+              <Button
+                disabled={this.state.filter === 'CLOSED'}
+                style={{ margin: 5 }}
+                light
+                onPress={() => {
+                  this.setState({ filter: 'CLOSED' });
+                }}
+              >
+                <Text style={{ color: 'red', marginHorizontal: 15 }}>
+                  List Closed
+                </Text>
+              </Button>
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                justifyContent: 'center'
+              }}
+            >
+              {libData.map((location, idx) => (
                 <MarkButton
                   key={idx}
                   {...location}
@@ -77,51 +138,6 @@ export default class Mapper extends Component {
                   }
                 />
               ))}
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                justifyContent: 'center'
-              }}
-            >
-              <Button
-                style={{ margin: 5 }}
-                success
-                onPress={() => {
-                  let newPage;
-                  if (page === 0) {
-                    newPage = libData.length - 1;
-                  } else {
-                    newPage = page - 1;
-                  }
-                  this.setState({ ...libData[newPage][0], page: newPage });
-                }}
-              >
-                <Text style={{ color: '#ffffff', marginHorizontal: 15 }}>
-                  {'<<<'}
-                </Text>
-              </Button>
-              <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>
-                {(page + 1).toString()}
-              </Text>
-              <Button
-                style={{ margin: 5 }}
-                success
-                onPress={() => {
-                  let newPage;
-                  if (page === libData.length - 1) {
-                    newPage = 0;
-                  } else {
-                    newPage = page + 1;
-                  }
-                  this.setState({ ...libData[newPage][0], page: newPage });
-                }}
-              >
-                <Text style={{ color: '#ffffff', marginHorizontal: 15 }}>
-                  {'>>>'}
-                </Text>
-              </Button>
             </View>
           </View>
         </Content>

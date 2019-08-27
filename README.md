@@ -2,9 +2,12 @@
 
 Find out which library near you is open at any time! This app will tell you the nearest open library in the Austin Public Library System.
 
+## Features
+
 ## Technologies
 
-Made with React Native and Expo
+Made with React Native and Expo.  
+App layout made using ES6 features, React Native and NativeBase components.
 
 ## Future Features
 

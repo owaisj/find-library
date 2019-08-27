@@ -6,7 +6,6 @@ export default function({ name, handleChange, open }) {
   return (
     <Button
       onPress={() => {
-        console.log('You pressed the button');
         handleChange();
       }}
       danger={!open}
