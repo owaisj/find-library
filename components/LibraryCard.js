@@ -24,22 +24,21 @@ const LocationCard = ({
     <Card>
       <CardItem header bordered button>
         <Text>{name}</Text>
+        <Right>
+          <Text>
+            {checkOpen({ hours }) ? (
+              <Text style={{ color: 'green' }}>Open!</Text>
+            ) : (
+              <Text style={{ color: 'red' }}>Closed</Text>
+            )}
+          </Text>
+        </Right>
       </CardItem>
       <CardItem body bordered>
         <Image
           source={{ uri: image }}
           style={{ height: 200, width: null, flex: 1 }}
         />
-      </CardItem>
-      <CardItem
-        bordered
-        style={{ flexDirection: 'row', justifyContent: 'center' }}
-      >
-        {checkOpen({ hours }) ? (
-          <Text style={{ color: 'green' }}>Open!</Text>
-        ) : (
-          <Text style={{ color: 'red' }}>Closed</Text>
-        )}
       </CardItem>
       <CardItem
         bordered

@@ -4,6 +4,7 @@ import { Content, Button } from 'native-base';
 import MapView, { Marker } from 'react-native-maps';
 import MarkButton from '../components/MarkButton';
 import data from '../data';
+import { checkOpen } from '../utils';
 import _ from 'lodash';
 
 // TODO: FILTERS - ALL, OPEN, CLOSED
@@ -16,19 +17,20 @@ export default class Mapper extends Component {
       latitude: 30.269498922,
       longitude: -97.74083037,
       description: 'The central branch of the Austin Public Library',
+      open: checkOpen(data[0]),
       page: 0
     };
   }
 
   render() {
     const { width } = Dimensions.get('screen');
-    const { latitude, longitude, name, description, page } = this.state;
-    const libData = _.chunk(data, 2);
+    const { latitude, longitude, name, description, page, open } = this.state;
+    const libData = _.chunk(data, 3);
     return (
       <ScrollView>
         <Content>
           <MapView
-            style={{ width, height: 175 }}
+            style={{ width, height: 200 }}
             region={{
               latitude,
               longitude,
@@ -64,6 +66,7 @@ export default class Mapper extends Component {
                 <MarkButton
                   key={idx}
                   {...location}
+                  open={checkOpen(location)}
                   handleChange={() =>
                     this.setState({
                       name: location.name,
