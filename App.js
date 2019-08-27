@@ -11,13 +11,11 @@ import Header from './components/Header';
 import Home from './screens/Home';
 import List from './screens/List';
 import Mapper from './screens/Mapper';
-import Search from './screens/Search';
 const MainNavigator = createMaterialTopTabNavigator(
   {
     Home: { screen: Home },
     Locations: { screen: List },
-    Map: { screen: Mapper },
-    Search: { screen: Search }
+    Map: { screen: Mapper }
   },
   {
     tabBarOptions: {
