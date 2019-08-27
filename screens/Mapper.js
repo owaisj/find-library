@@ -6,7 +6,8 @@ import MarkButton from '../components/MarkButton';
 import data from '../data';
 import _ from 'lodash';
 
-// TODO: FILTERS - ALL, NORTH, SOUTH, CENTRAL
+// TODO: FILTERS - ALL, OPEN, CLOSED
+// TODO: Specific color for markers
 export default class Mapper extends Component {
   constructor(props) {
     super(props);

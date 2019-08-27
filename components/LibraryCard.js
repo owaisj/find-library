@@ -1,7 +1,7 @@
 import React from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, View, Linking } from 'react-native';
 import { Card, CardItem, Body, Text, Left, Right, Icon } from 'native-base';
-import Moment from 'moment-timezone';
+import { checkOpen } from '../utils';
 
 const LocationCard = ({
   name = 'Central Library',
@@ -20,17 +20,6 @@ const LocationCard = ({
   latitude = 30.26569,
   longitude = -97.75178
 }) => {
-  // TODO: Create utility function
-  const now = Moment().tz('America/Chicago');
-  const today = now.format('ddd');
-  const openTime = Moment(hours[today][0], 'ha');
-  const closeTime = Moment(hours[today][1], 'ha');
-  let check;
-  if (hours[today][0] === 'Closed') {
-    check = false;
-  } else {
-    check = now.isBetween(openTime, closeTime);
-  }
   return (
     <Card>
       <CardItem header bordered button>
@@ -46,7 +35,7 @@ const LocationCard = ({
         bordered
         style={{ flexDirection: 'row', justifyContent: 'center' }}
       >
-        {check ? (
+        {checkOpen({ hours }) ? (
           <Text style={{ color: 'green' }}>Open!</Text>
         ) : (
           <Text style={{ color: 'red' }}>Closed</Text>
@@ -70,11 +59,9 @@ const LocationCard = ({
         <View>
           <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Address</Text>
           <View style={{ flex: 1, justifyContent: 'center' }}>
-            {address.map((line, index) => (
-              <Text key={index} style={{ fontSize: 10 }}>
-                {line}
-              </Text>
-            ))}
+            <Text style={{ fontSize: 10 }} selectable>
+              {address.join('\n')}
+            </Text>
           </View>
         </View>
       </CardItem>
@@ -86,7 +73,7 @@ const LocationCard = ({
             justifyContent: 'space-between'
           }}
         >
-          <TouchableOpacity onPress={() => console.log('You rang?')}>
+          <TouchableOpacity onPress={() => Linking.openURL(`tel://${pNumber}`)}>
             <Text>
               <Icon style={{ fontSize: 15 }} name="call" />
               {'  '}
@@ -94,7 +81,9 @@ const LocationCard = ({
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => console.log('You map?')}>
+          <TouchableOpacity
+            onPress={() => Linking.openURL(`geo:${latitude},${longitude}`)}
+          >
             <Text>
               <Icon style={{ fontSize: 15 }} name="map" />
               {'  '}

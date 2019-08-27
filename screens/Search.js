@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { Content, Form, Item, Label, Input } from 'native-base';
 import libData from '../data';
 
-// TODO: Integrate this in to the List.js and Mapper.js components
+// NOTE: User's cannot currently view this screen
 export default class Search extends Component {
   constructor(props) {
     super(props);

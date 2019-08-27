@@ -9,7 +9,8 @@ export default function({ name, handleChange }) {
         console.log('You pressed the button');
         handleChange();
       }}
-      warning
+      warning={name === 'Central Library'}
+      info={name !== 'Central Library'}
       style={{ margin: 5 }}
     >
       <Text style={{ color: '#ffffff', marginHorizontal: 15 }}>{name}</Text>
