@@ -7,7 +7,8 @@ Find out which library near you is open at any time! This app will tell you the 
 ## Technologies
 
 Made with React Native and Expo.  
-App layout made using ES6 features, React Native and NativeBase components.
+App layout made using ES6 features, React Native and NativeBase components.  
+Global state managed with the Context API.
 
 ## Future Features
 

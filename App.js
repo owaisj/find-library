@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { useEffect, useState, Fragment, useReducer } from 'react';
 import { Text } from 'react-native';
 import { Container, Content, Footer } from 'native-base';
 import { AppLoading } from 'expo';
@@ -7,10 +7,12 @@ import {
   createMaterialTopTabNavigator,
   createAppContainer
 } from 'react-navigation';
+import Context, { reducer } from './context';
 import Header from './components/Header';
 import Home from './screens/Home';
 import List from './screens/List';
 import Mapper from './screens/Mapper';
+
 const MainNavigator = createMaterialTopTabNavigator(
   {
     Home: { screen: Home },
@@ -28,30 +30,31 @@ const MainNavigator = createMaterialTopTabNavigator(
 
 const Root = createAppContainer(MainNavigator);
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { loading: true };
-  }
+export default function() {
+  const [loading, setLoading] = useState(true);
+  // [state, dispatch]
+  const [filter, setFilter] = useReducer(reducer, 'ALL');
 
-  async componentDidMount() {
+  async function loadFonts() {
     await Font.loadAsync({
       Roboto: require('native-base/Fonts/Roboto.ttf'),
       Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
     });
 
-    this.setState({
-      loading: false
-    });
+    setLoading(false);
   }
 
-  render() {
-    if (this.state.loading) {
-      return <AppLoading />;
-    }
+  useEffect(() => {
+    loadFonts();
+  }, []);
 
-    return (
-      <Fragment>
+  if (loading) {
+    return <AppLoading />;
+  }
+
+  return (
+    <Fragment>
+      <Context.Provider value={{ filter, setFilter }}>
         <Container>
           <Header />
           <Root />
@@ -59,7 +62,7 @@ export default class App extends Component {
             <Text style={{ color: 'white' }}>Made by Owais Jamil in 2019</Text>
           </Footer>
         </Container>
-      </Fragment>
-    );
-  }
+      </Context.Provider>
+    </Fragment>
+  );
 }
